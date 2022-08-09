@@ -19,12 +19,29 @@ RUN \
         nss=3.78.1-r0 \
         openjdk11-jre-headless=11.0.16_p8-r0 \
         xmlstarlet=1.6.1-r0 \
+        nodejs=16.16.0-r0 \
+        npm=8.10.0-r0 \
     \
     && curl -J -L -o /tmp/traccar.zip \
       "https://github.com/traccar/traccar/releases/download/v5.3/traccar-other-5.3.zip" \
     \
     && mkdir -p /opt/traccar \
     && unzip -d /opt/traccar /tmp/traccar.zip \
+    \
+    && curl -J -L -o /tmp/traccar-web.zip  \
+      "https://github.com/traccar/traccar-web/archive/refs/tags/v5.3.zip" \
+    \
+    && mkdir -p /tmp/traccar-web \
+    && unzip -d /tmp/traccar-web /tmp/traccar-web.zip \
+    \
+    && cd /tmp/traccar-web/traccar-web-5.3/modern \
+    && sed -i 's/"name": "traccar",/"name": "traccar",\n  "homepage": ".",/' package.json \
+    && npm ci \
+    && npm run build \
+    \
+    && cp -r /tmp/traccar-web/traccar-web-5.3/modern/build /opt/traccar/modern-modified \
+    \
+    && cd /opt/traccar \
     \
     && rm -fr /tmp/*
 

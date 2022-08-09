@@ -4,10 +4,16 @@
 # Configures NGINX for use with the Traccar server
 # ==============================================================================
 
+declare ingress_url
+
+ingress_url="$(bashio::addon.ingress_url)"
+
 # Generate Ingress configuration
 bashio::var.json \
     interface "$(bashio::addon.ip_address)" \
     port "$(bashio::addon.ingress_port)" \
+    ingress_url "${ingress_url}" \
+    ingress_url_trimmed "${ingress_url:1}" \
     | tempio \
         -template /etc/nginx/templates/ingress.gtpl \
         -out /etc/nginx/servers/ingress.conf
