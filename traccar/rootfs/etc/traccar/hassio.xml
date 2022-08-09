@@ -6,9 +6,10 @@
 
     <entry key='web.enable'>true</entry>
     <entry key='web.port'>18682</entry>
-    <entry key='web.path'>./web</entry>
+    <entry key='web.path'>./modern</entry>
     <entry key='web.address'>127.0.0.1</entry>
     <entry key='web.cacheControl'>max-age=3600,public</entry>
+    <entry key='web.old'>false</entry>
 
     <entry key='geocoder.enable'>false</entry>
     <entry key='geocoder.type'>google</entry>
@@ -22,8 +23,6 @@
 
     <entry key='event.enable'>true</entry>
     <entry key='event.ignoreDuplicateAlerts'>true</entry>
-    <entry key='processing.computedAttributes.enable'>true</entry>
-    <entry key='processing.engineHours.enable'>true</entry>
 
     <entry key='media.path'>./media</entry>
 
