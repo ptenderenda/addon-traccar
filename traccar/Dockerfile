@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:12.2.2
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:13.1.1
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -14,32 +14,32 @@ WORKDIR /opt/traccar
 # Setup base
 RUN \
     apk add --no-cache \
-        mariadb-client=10.6.8-r0 \
-        nginx=1.22.0-r1 \
-        nss=3.78.1-r0 \
-        openjdk11-jre-headless=11.0.16_p8-r0 \
-        xmlstarlet=1.6.1-r0 \
-        nodejs=16.16.0-r0 \
-        npm=8.10.0-r0 \
+        mariadb-client=10.6.11-r0 \
+        nginx=1.22.1-r0 \
+        nss=3.85-r0 \
+        openjdk11-jre-headless=11.0.18_p10-r0 \
+        xmlstarlet=1.6.1-r1 \
+        nodejs=18.12.1-r0 \
+        npm=9.1.2-r0 \
     \
     && curl -J -L -o /tmp/traccar.zip \
-      "https://github.com/traccar/traccar/releases/download/v5.3/traccar-other-5.3.zip" \
+      "https://github.com/traccar/traccar/releases/download/v5.5/traccar-other-5.5.zip" \
     \
     && mkdir -p /opt/traccar \
     && unzip -d /opt/traccar /tmp/traccar.zip \
     \
     && curl -J -L -o /tmp/traccar-web.zip  \
-      "https://github.com/traccar/traccar-web/archive/refs/tags/v5.3.zip" \
+      "https://github.com/traccar/traccar-web/archive/refs/tags/v5.5.zip" \
     \
     && mkdir -p /tmp/traccar-web \
     && unzip -d /tmp/traccar-web /tmp/traccar-web.zip \
     \
-    && cd /tmp/traccar-web/traccar-web-5.3/modern \
+    && cd /tmp/traccar-web/traccar-web-5.5/modern \
     && sed -i 's/"name": "traccar",/"name": "traccar",\n  "homepage": ".",/' package.json \
     && npm ci \
     && npm run build \
     \
-    && cp -r /tmp/traccar-web/traccar-web-5.3/modern/build /opt/traccar/modern-modified \
+    && cp -r /tmp/traccar-web/traccar-web-5.5/modern/build /opt/traccar/modern-modified \
     \
     && cd /opt/traccar \
     \
